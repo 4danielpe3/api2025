@@ -1,6 +1,8 @@
 import mysql from "mysql2/promise";
 import fs from "fs";
-import { BD_HOST, BD_USER, BD_PASSWORD, BD_DATABASE, BD_PORT } from "./config.js";
+import configVars from "./config.js";
+
+const { BD_HOST, BD_USER, BD_PASSWORD, BD_DATABASE, BD_PORT } = configVars;
 
 const pool = mysql.createPool({
   host: BD_HOST,
@@ -10,7 +12,7 @@ const pool = mysql.createPool({
   port: BD_PORT,
   ssl: {
     rejectUnauthorized: true,
-    ca: fs.readFileSync("./aiven-ca.pem") // certificado CA descargado desde Aiven
+    ca: fs.readFileSync("aiven-ca.pem")
   }
 });
 
