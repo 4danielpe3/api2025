@@ -1,11 +1,17 @@
-import {config} from 'dotenv'
-config()
+import mysql from "mysql2/promise";
+import fs from "fs";
+import { BD_HOST, BD_USER, BD_PASSWORD, BD_DATABASE, BD_PORT } from "./config.js";
 
-export const BD_HOST=process.env.BD_HOST || 'localhost'
-export const BD_DATABASE=process.env.BD_DATABASE || 'baseapp'
-export const BD_USER=process.env.BD_USER ||'root'
-export const BD_PASSWORD=process.env.BD_PASSWORD || ''
-export const BD_PORT=process.env.BD_PORT || 3306
-export const PORT=process.env.PORT || 3000
+const pool = mysql.createPool({
+  host: BD_HOST,
+  user: BD_USER,
+  password: BD_PASSWORD,
+  database: BD_DATABASE,
+  port: BD_PORT,
+  ssl: {
+    rejectUnauthorized: true,
+    ca: fs.readFileSync("./aiven-ca.pem") // certificado CA descargado desde Aiven
+  }
+});
 
-export const JWT_SECRET = process.env.JWT_SECRET || '123'
+export default pool;
