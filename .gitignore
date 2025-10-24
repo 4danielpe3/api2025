@@ -1,0 +1,8 @@
+# Ignorar dependencias
+node_modules/
+
+# Ignorar archivos de configuración sensibles
+.env
+
+# Ignorar archivos temporales o de subida
+uploads/
